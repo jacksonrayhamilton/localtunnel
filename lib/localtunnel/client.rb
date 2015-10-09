@@ -3,6 +3,8 @@ module Localtunnel
     @@pid = nil
 
     def self.start(options = {})
+      raise ClientAlreadyStartedError if running?
+
       ensure_package
 
       execution_string = "lt"
@@ -11,11 +13,13 @@ module Localtunnel
       execution_string << " -h '#{options[:remote_host]}'" if options.key?(:remote_host)
       execution_string << " -l '#{options[:local_host]}'" if options.key?(:local_host)
 
-      @@pid = Process.spawn(execution_string) unless running?
+      @@pid = Process.spawn(execution_string)
     end
 
     def self.stop
-      Process.kill("KILL", @@pid) if running?
+      raise ClientAlreadyStoppedError unless running?
+
+      Process.kill("KILL", @@pid)
     end
 
     def self.running?
@@ -27,10 +31,16 @@ module Localtunnel
     def self.ensure_package
       `lt --version`
     rescue Errno::ENOENT
-      raise PackageNotFoundError, "localtunnel npm package not found"
+      raise NpmPackageNotFoundError
     end
   end
 
-  class PackageNotFoundError < StandardError
+  class NpmPackageNotFoundError < StandardError
+  end
+
+  class ClientAlreadyStartedError < StandardError
+  end
+
+  class ClientAlreadyStoppedError < StandardError
   end
 end
