@@ -6,7 +6,8 @@ module Localtunnel
     @@url = nil
 
     def self.start(options = {})
-      raise ClientAlreadyStartedError if running?
+      return if running?
+
       raise NpmPackageNotFoundError unless package_installed?
 
       log = Tempfile.new("localtunnel")
@@ -15,9 +16,7 @@ module Localtunnel
     end
 
     def self.stop
-      raise ClientAlreadyStoppedError unless running?
-
-      Process.kill("KILL", @@pid)
+      Process.kill("KILL", @@pid) if running?
     end
 
     def self.running?
@@ -27,9 +26,7 @@ module Localtunnel
     end
 
     def self.url
-      raise ClientAlreadyStoppedError unless running?
-
-      @@url
+      @@url if running?
     end
 
     def self.package_installed?
@@ -64,12 +61,6 @@ module Localtunnel
   end
 
   class NpmPackageNotFoundError < StandardError
-  end
-
-  class ClientAlreadyStartedError < StandardError
-  end
-
-  class ClientAlreadyStoppedError < StandardError
   end
 
   class ClientConnectionFailedError < StandardError
