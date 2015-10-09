@@ -1,10 +1,12 @@
+require "tempfile"
+
 module Localtunnel
   class Client
+    @@log = nil
     @@pid = nil
 
     def self.start(options = {})
       raise ClientAlreadyStartedError if running?
-
       raise NpmPackageNotFoundError unless package_installed?
 
       execution_string = "lt"
@@ -12,6 +14,7 @@ module Localtunnel
       execution_string << " -s '#{options[:subdomain]}'" if options.key?(:subdomain)
       execution_string << " -h '#{options[:remote_host]}'" if options.key?(:remote_host)
       execution_string << " -l '#{options[:local_host]}'" if options.key?(:local_host)
+      execution_string << " 1>#{(@@log = Tempfile.new("localtunnel")).path} 2>&1"
 
       @@pid = Process.spawn(execution_string)
     end
@@ -26,6 +29,13 @@ module Localtunnel
       !@@pid.nil? && Process.waitpid(@@pid, Process::WNOHANG).nil?
     rescue Errno::ECHILD
       false
+    end
+
+    def self.url
+      raise ClientAlreadyStoppedError unless running?
+
+      @@log.rewind
+      @@log.read.match(/^your url is: (.*)$/).captures[0]
     end
 
     def self.package_installed?
