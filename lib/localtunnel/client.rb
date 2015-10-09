@@ -5,7 +5,7 @@ module Localtunnel
     def self.start(options = {})
       raise ClientAlreadyStartedError if running?
 
-      ensure_package
+      raise NpmPackageNotFoundError unless package_installed?
 
       execution_string = "lt"
       execution_string << " -p '#{options[:port]}'" if options.key?(:port)
@@ -28,10 +28,10 @@ module Localtunnel
       false
     end
 
-    def self.ensure_package
-      `lt --version`
+    def self.package_installed?
+      !`lt --version`.to_s.empty?
     rescue Errno::ENOENT
-      raise NpmPackageNotFoundError
+      false
     end
   end
 
