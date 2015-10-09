@@ -16,6 +16,12 @@ And then execute:
 $ bundle install
 ```
 
+Lastly, install the localtunnel npm package and ensure that it is available in your `PATH`:
+
+```bash
+$ npm install -g localtunnel
+```
+
 ## Usage
 
 TODO.
