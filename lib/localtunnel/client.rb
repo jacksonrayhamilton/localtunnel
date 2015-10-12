@@ -17,6 +17,8 @@ module Localtunnel
 
     def self.stop
       Process.kill("KILL", @@pid) if running?
+      Process.waitpid(@@pid) # Wait until the process is killed.
+    rescue Errno::ECHILD
     end
 
     def self.running?
