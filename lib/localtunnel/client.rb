@@ -22,17 +22,14 @@ module Localtunnel
     def self.stop
       return unless running?
 
-      Process.kill("KILL", @@pid)
-      Process.waitpid(@@pid) # Wait until the process is killed.
-    rescue Errno::ECHILD
-    ensure
+      `kill -9 #{@@pid}` # Can't use Process.kill, since JRuby on Raspbian doesn't support it.
+      @@pid = nil
+
       return # Explicitly return nil.
     end
 
     def self.running?
-      !@@pid.nil? && Process.waitpid(@@pid, Process::WNOHANG).nil?
-    rescue Errno::ECHILD
-      false
+      !@@pid.nil?
     end
 
     def self.url
