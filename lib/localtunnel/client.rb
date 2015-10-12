@@ -22,7 +22,7 @@ module Localtunnel
     def self.stop
       return unless running?
 
-      `kill -9 #{@@pid}` # Can't use Process.kill, since JRuby on Raspbian doesn't support it.
+      `kill -9 #{@@pid} 1>/dev/null 2>&1` # Can't use Process.kill, since JRuby on Raspbian doesn't support it.
       @@pid = nil
 
       return # Explicitly return nil.
