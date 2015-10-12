@@ -13,6 +13,8 @@ module Localtunnel
       log = Tempfile.new("localtunnel")
       @@pid = Process.spawn(execution_string(log, options))
       @@url = parse_url!(log)
+
+      at_exit { stop } # Ensure process is killed if Ruby exits.
     end
 
     def self.stop
