@@ -36,12 +36,12 @@ module Localtunnel
     end
 
     def self.execution_string(log, options)
-      s = "lt"
+      s = "exec lt"
       s << " -p '#{options[:port]}'" if options.key?(:port)
       s << " -s '#{options[:subdomain]}'" if options.key?(:subdomain)
       s << " -h '#{options[:remote_host]}'" if options.key?(:remote_host)
       s << " -l '#{options[:local_host]}'" if options.key?(:local_host)
-      s << " 1>#{log.path} 2>&1"
+      s << " > #{log.path}"
     end
 
     def self.parse_url!(log, max_seconds = 10)
