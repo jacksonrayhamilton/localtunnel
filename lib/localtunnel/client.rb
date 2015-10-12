@@ -15,12 +15,18 @@ module Localtunnel
       @@url = parse_url!(log)
 
       at_exit { stop } # Ensure process is killed if Ruby exits.
+
+      return # Explicitly return nil.
     end
 
     def self.stop
-      Process.kill("KILL", @@pid) if running?
+      return unless running?
+
+      Process.kill("KILL", @@pid)
       Process.waitpid(@@pid) # Wait until the process is killed.
     rescue Errno::ECHILD
+    ensure
+      return # Explicitly return nil.
     end
 
     def self.running?
