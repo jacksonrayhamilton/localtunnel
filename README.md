@@ -1,6 +1,6 @@
 # localtunnel
 
-Ruby gem for [localtunnel](https://localtunnel.me/).
+Ruby gem wrapping the [localtunnel](https://localtunnel.me/) npm package.
 
 ## Installation
 

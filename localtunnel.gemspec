@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Localtunnel::VERSION
   spec.authors       = ["Swinburne Software Innovation Lab"]
   spec.email         = ["god@ssil.com.au"]
-  spec.summary       = %q{Ruby gem for localtunnel.}
-  spec.description   = %q{Ruby gem for localtunnel.}
+  spec.summary       = %q{Ruby gem wrapping the localtunnel npm package.}
+  spec.description   = %q{Ruby gem wrapping the localtunnel npm package.}
   spec.homepage      = "https://github.com/ssilab/localtunnel"
   spec.license       = "MIT"
   spec.files         = `git ls-files -z`.split("\x0")
