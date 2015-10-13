@@ -46,3 +46,7 @@ Localtunnel::Client.start(
   local_host: 'http://my-domain-2.com'
 )
 ```
+
+## Related
+
+It is also worth checking out [ngrok-tunnel](https://github.com/bogdanovich/ngrok-tunnel), a gem that is similar in function to this one and served as its inspiration.
