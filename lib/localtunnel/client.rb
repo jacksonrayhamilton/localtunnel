@@ -46,22 +46,24 @@ module Localtunnel
       s << " -s '#{options[:subdomain]}'" if options.key?(:subdomain)
       s << " -h '#{options[:remote_host]}'" if options.key?(:remote_host)
       s << " -l '#{options[:local_host]}'" if options.key?(:local_host)
-      s << " > #{log.path}"
+      s << " > #{log.path} 2>&1"
     end
 
     def self.parse_url!(log, max_seconds = 10)
       max_seconds.times do
         sleep 1
-        raise ClientConnectionFailedError unless running?
-
         log.rewind
-        if match_data = log.read.match(/^your url is: (.*)$/)
-          return match_data.captures[0]
+        log_data = log.read
+
+        if match_data = log_data.match(/^your url is: (.*)$/)
+          return match_data.captures.first
+        elsif log_data.match(/^Error: (.*)$/)
+          raise ClientConnectionFailedError
         end
       end
 
       stop
-      raise ClientConnectionFailedError
+      raise ClientConnectionFailedError # Timeout.
     end
   end
 
