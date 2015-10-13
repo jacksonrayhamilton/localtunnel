@@ -24,4 +24,25 @@ $ npm install -g localtunnel
 
 ## Usage
 
-TODO.
+A basic example:
+
+```ruby
+Localtunnel::Client.start(port: 3000)
+
+Localtunnel::Client.running? # => true
+
+Localtunnel::Client.url # => https://pnevcucqgb.localtunnel.me
+
+Localtunnel::Client.stop
+```
+
+Extra options can also be specified:
+
+```ruby
+Localtunnel::Client.start(
+  port: 3000,
+  subdomain: 'hello',
+  remote_host: 'http://my-domain-1.com',
+  local_host: 'http://my-domain-2.com'
+)
+```
