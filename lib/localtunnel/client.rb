@@ -12,20 +12,18 @@ module Localtunnel
 
       log = Tempfile.new("localtunnel")
       @@pid = Process.spawn(execution_string(log, options))
-      @@url = parse_url!(log)
 
       at_exit { stop } # Ensure process is killed if Ruby exits.
 
-      return # Explicitly return nil.
+      @@url = parse_url!(log)
     end
 
     def self.stop
       return unless running?
 
       `kill -9 #{@@pid} 1>/dev/null 2>&1` # Can't use Process.kill, since JRuby on Raspbian doesn't support it.
-      @@pid = nil
 
-      return # Explicitly return nil.
+      @@pid = nil
     end
 
     def self.running?
