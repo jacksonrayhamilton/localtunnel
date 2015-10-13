@@ -1,4 +1,4 @@
-# localtunnel
+# localtunnel [![Gem version](http://img.shields.io/gem/v/localtunnel.svg?style=flat-square)](http://rubygems.org/gems/localtunnel)
 
 Ruby gem wrapping the [localtunnel](https://localtunnel.me/) npm package.
 
