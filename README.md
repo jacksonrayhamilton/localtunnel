@@ -27,6 +27,8 @@ $ npm install -g localtunnel
 A basic example:
 
 ```ruby
+require 'localtunnel'
+
 Localtunnel::Client.start(port: 3000)
 
 Localtunnel::Client.running? # => true

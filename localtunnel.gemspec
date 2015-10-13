@@ -14,6 +14,7 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
   spec.files         = `git ls-files -z`.split("\x0")
   spec.require_paths = ["lib"]
+  spec.post_install_message = "Please ensure that the localtunnel npm package is installed (i.e. `npm install -g localtunnel`)."
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
 end
