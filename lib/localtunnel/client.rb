@@ -35,7 +35,7 @@ module Localtunnel
     end
 
     def self.package_installed?
-      !`lt --version`.to_s.empty?
+      !`lt --version`.empty?
     rescue Errno::ENOENT
       false
     end
