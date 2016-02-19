@@ -6,11 +6,11 @@ require 'localtunnel/version'
 Gem::Specification.new do |spec|
   spec.name          = "localtunnel"
   spec.version       = Localtunnel::VERSION
-  spec.authors       = ["Swinburne Software Innovation Lab"]
-  spec.email         = ["god@ssil.com.au"]
+  spec.authors       = ["DSTIL"]
+  spec.email         = ["15gorillas@gmail.com"]
   spec.summary       = %q{Ruby gem wrapping the localtunnel npm package.}
   spec.description   = %q{Ruby gem wrapping the localtunnel npm package.}
-  spec.homepage      = "https://github.com/ssilab/localtunnel"
+  spec.homepage      = "https://github.com/dstil/localtunnel"
   spec.license       = "MIT"
   spec.files         = `git ls-files -z`.split("\x0")
   spec.require_paths = ["lib"]
